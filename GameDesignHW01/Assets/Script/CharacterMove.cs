@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[DefaultExecutionOrder(2)]
 public class CharacterMove : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -12,16 +11,16 @@ public class CharacterMove : MonoBehaviour
     
     void Start()
     {
-        sceneCountText = GameObject.Find("Player/UI/Canvas/Text").GetComponent<Text>();
-        if (sceneCountText == null)
-        {
-            Debug.LogError("Text component not found or not properly assigned!");
-        }
-        void Start()
-        {
-            Debug.Log("CharacterMove Start");
-            // ...
-        }
+        // sceneCountText = GameObject.Find("Player/UI/Canvas/Text").GetComponent<Text>();
+        // if (sceneCountText == null)
+        // {
+        //     Debug.LogError("Text component not found or not properly assigned!");
+        // }
+        // void Start()
+        // {
+        //     Debug.Log("CharacterMove Start");
+        //     // ...
+        // }
     }
  
     private void Awake()
@@ -42,6 +41,7 @@ public class CharacterMove : MonoBehaviour
     void Update()
     {
         CharacterManager.instance.CharacterMove();
+        CharacterManager.instance.UpdateSceneCountText(sceneCountText);
     }
     void OnCollisionEnter(Collision collision)
     {

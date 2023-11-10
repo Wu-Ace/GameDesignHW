@@ -6,7 +6,7 @@ using UnityEngine;
 public class MySceneManager : MonoBehaviour
 {
     public static MySceneManager instance; // 将字段声明为公共的
-    public int SwitchSceneNumber = 1;
+    public int SwitchSceneNumber = 0;
     void Awake()
     {
         if (instance == null)

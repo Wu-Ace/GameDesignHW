@@ -83,11 +83,11 @@ public class CharacterManager : MonoBehaviour
         {
             if (isFirstTrigger) // 如果是第一次触发，将计数设置为1
             {
-                MySceneManager.instance.SwitchSceneNumber = 1;
+                MySceneManager.instance.SwitchSceneNumber = 0;
                 isFirstTrigger = false; // 将标志设置为false，以后的触发不再执行该分支
             }
 
-            sceneCountText.text = "Switch Count: " + MySceneManager.instance.SwitchSceneNumber.ToString();
+            sceneCountText.text = "Switch Count: " + MySceneManager.instance.SwitchSceneNumber.ToString() +" "+CharacterController.instance.currentState.ToString();
         }
         else
         {
