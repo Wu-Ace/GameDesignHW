@@ -53,4 +53,15 @@ public class CharacterMove : MonoBehaviour
             CharacterManager.instance.UpdateSceneCountText(sceneCountText);
         }
     }
+    private void OnTriggerEnter(Collider collider)
+    {
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        Debug.Log("Item detected!");
+
+        if (itemWorld != null)
+        {
+            CharacterManager.inventory.AddItem(itemWorld.GetItem());
+            itemWorld.DestroySelf();
+        }
+    }
 }

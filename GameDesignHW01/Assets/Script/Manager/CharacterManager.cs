@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement; 
 public class CharacterManager : MonoBehaviour
 {
     // Singleton
@@ -14,10 +15,15 @@ public class CharacterManager : MonoBehaviour
     private Vector3 moveDirection;
     public static Vector3 movement;
     public AudioClip footstepAudio;
-
-    private GameObject player;
+    private string currentSceneName;
+    public static GameObject player;
     private Text sceneCountText; // 用于显示切换场景次数的文本
     private bool isFirstTrigger = true; // 添加一个标志以判断是否是第一次触发
+    public static Inventory inventory;
+    [SerializeField] private UI_Inventory uiInventory;//这个是用来设置背包的，因为我们在InventoryManager中要用到这个类，所以要先设置
+    public GameObject Player;
+    public static Vector3 PlayerPosition;
+
     private void Awake()
     {
         if (instance == null)
@@ -29,6 +35,14 @@ public class CharacterManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        player = GameObject.FindWithTag("Player");
+        rb = player.GetComponent<Rigidbody>();
+
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+        currentSceneName = SceneManager.GetActiveScene().name;
+
     }
 
     private void Start()
@@ -46,12 +60,28 @@ public class CharacterManager : MonoBehaviour
         sceneCountText.text = "Switch Count: " + MySceneManager.instance.SwitchSceneNumber.ToString();
     }
 
-    private void Update()
+    public void Update()
     {
-        player = GameObject.FindWithTag("Player");
-        rb = player.GetComponent<Rigidbody>();
+        // player = GameObject.FindWithTag("Player");
+        // rb = player.GetComponent<Rigidbody>();
         // sceneCountText = player.GetComponentInChildren<Text>();
+        PlayerPosition = player.transform.position;
+        // Debug.Log(PlayerPosition);
+        // if (Input.GetKeyDown(KeyCode.E))
+        // {
+        //     Debug.Log("Inventory Set!");
+        // }
+        string activeSceneName = SceneManager.GetActiveScene().name;
+        if (activeSceneName != currentSceneName)
+        {
+            // 场景已经改变
+            currentSceneName = activeSceneName;
+            uiInventory.SetInventory(inventory);
+            uiInventory.RefreshInventoryItems();
+        }
     }
+
+    
 
     public void CharacterMove()
     {

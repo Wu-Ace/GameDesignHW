@@ -18,7 +18,7 @@ public class MySceneManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        Debug.Log("MySceneManager Awake");
+        // Debug.Log("MySceneManager Awake");
     }
 
     public void LoadNextScene()
@@ -32,6 +32,7 @@ public class MySceneManager : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex - 1);
         ++SwitchSceneNumber;
+        // CharacterManager.uiInventory.SetInventory(CharacterManager.inventory);
     }
 
     public void LoadScene(string sceneName)

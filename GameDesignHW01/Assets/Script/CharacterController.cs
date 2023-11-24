@@ -23,7 +23,7 @@ public class CharacterController : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        Debug.Log("MySceneManager Awake");
+        // Debug.Log("MySceneManager Awake");
     }
     void Start()
     {
