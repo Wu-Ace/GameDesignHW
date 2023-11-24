@@ -8,7 +8,7 @@ using TMPro;
 
 public class UI_Inventory : MonoBehaviour
 {
-   public Inventory inventory;
+   private Inventory inventory_1;
    public Transform itemSlotContainer;
    public Transform itemSlotTemplate;
    public GameObject UI;
@@ -38,11 +38,6 @@ public class UI_Inventory : MonoBehaviour
          Destroy(this.gameObject);
       }
    }
-   void Start()
-   {
-      // 为按钮添加点击事件
-      button.onClick.AddListener(() => { isButtonClicked = true; });
-   }
 
    void Update()
    {
@@ -63,7 +58,7 @@ public class UI_Inventory : MonoBehaviour
 
    public void SetInventory(Inventory inventory)
    {
-      this.inventory = inventory;
+      this.inventory_1 = inventory;
 
       inventory.OnItemListChanged += Inventory_OnItemListChanged;
 
@@ -75,7 +70,7 @@ public class UI_Inventory : MonoBehaviour
       RefreshInventoryItems();
    }
 
-   public void RefreshInventoryItems()
+   private void RefreshInventoryItems()
    {
       foreach (Transform child in itemSlotContainer)
       {
@@ -86,21 +81,23 @@ public class UI_Inventory : MonoBehaviour
       int x = 0;
       int y = 0;
       float itemSlotCellSize = 100f;
-      foreach (Item item in inventory.GetItemList())
+      foreach (Item item in inventory_1.GetItemList())
       {
          // Debug.Log(itemSlotTemplate);
          RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
          itemSlotRectTransform.gameObject.SetActive(true);
-         button= itemSlotRectTransform.GetComponentInChildren<Button>();
-         //当鼠标右键点击itemSlotContainer的button组件
+         
          itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () =>
          {
             Debug.Log("Button clicked!");
-            inventory.RemoveItem(item);
+            Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
+            inventory_1.RemoveItem(item);
             Vector3 randomDir = Random.insideUnitSphere * radius;
             Vector3 dropPosition = CharacterManager.player.transform.position + randomDir;
             dropPosition.y = CharacterManager.player.transform.position.y; // 确保生成位置的y坐标与中心物体的y坐标相同
-            ItemWorld.SpawnItemWorld(dropPosition, item);
+            ItemWorld.SpawnItemWorld(dropPosition, duplicateItem);
+            inventory_1.RemoveItem(item);
+
          };
             
          itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);

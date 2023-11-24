@@ -16,12 +16,7 @@ public class ItemWorld : MonoBehaviour
         return itemWorld;
     }//这段代码意思是
     
-    public static void  DropItem(Vector3 dropPosition, Item item) {
-        // Vector3 randomDir = UtilsClass.GetRandomDir();
-        SpawnItemWorld(dropPosition , item);
-        // itemWorld.GetComponent<Rigidbody>().AddForce(randomDir * 5f, ForceMode.Impulse);
-        
-    }
+    // public static void  DropItem(Vector3 dropPosition, Item item) {
     
     private Item item;
     private SpriteRenderer spriteRenderer;
@@ -31,7 +26,7 @@ public class ItemWorld : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();//这个代码被挂载在
+        // textMeshPro = transform.Find("Text").GetComponent<TextMeshProUGUI>();//这个报错是因为没有找到Text这个物体
     }
     
 
@@ -57,7 +52,7 @@ public class ItemWorld : MonoBehaviour
     {// Drop item
             Item duplicateItem = new Item { itemType = item.itemType, amount = item.amount };
             inventory.RemoveItem(item);
-            Debug.Log("RightClick!");
+            // Debug.Log("RightClick!");
             
             Vector3 spawnPosition = CharacterManager.player.transform.position + Random.insideUnitSphere * radius;
             spawnPosition.y = CharacterManager.player.transform.position.y;// 确保生成位置的y坐标与中心物体的y坐标相同

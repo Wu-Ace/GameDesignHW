@@ -56,6 +56,7 @@ public class CharacterManager : MonoBehaviour
         {
             Debug.LogError("Text component not found on player's child object!");
         }
+        uiInventory.SetInventory(inventory);
 
         sceneCountText.text = "Switch Count: " + MySceneManager.instance.SwitchSceneNumber.ToString();
     }
@@ -76,8 +77,7 @@ public class CharacterManager : MonoBehaviour
         {
             // 场景已经改变
             currentSceneName = activeSceneName;
-            uiInventory.SetInventory(inventory);
-            uiInventory.RefreshInventoryItems();
+            // uiInventory.RefreshInventoryItems();
         }
     }
 
